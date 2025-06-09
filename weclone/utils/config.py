@@ -35,7 +35,7 @@ def load_config(arg_type: str):
                 logger.warning(f"{config['dataset']}数据集不包history字段，尝试使用wechat-sft-with-history数据集")
                 config["dataset"] = "wechat-sft-with-history"
         if "image" in s_config["make_dataset_args"]["include_type"]:
-            if config["vision_api"].get("enable", False):
+            if s_config["make_dataset_args"].get("vision_api", {}).get("enable", False):
                 config["dataset"] = "wechat-img-rec-sft"  # 图像识别类模型使用的数据集
             else:
                 config["dataset"] = "wechat-mllm-sft"  # 多模态模型使用的数据集
@@ -46,7 +46,7 @@ def load_config(arg_type: str):
         config["dataset_dir"] = s_config["train_sft_args"]["dataset_dir"]
         config["cutoff_len"] = s_config["train_sft_args"]["cutoff_len"]
         if "image" in config["include_type"]:
-            if config["vision_api"].get("enable", False):
+            if s_config["make_dataset_args"].get("vision_api", {}).get("enable", False):
                 config["dataset"] = "wechat-img-rec-sft"  # 图像识别类模型使用的数据集
             else:
                 config["dataset"] = "wechat-mllm-sft"  # 多模态模型使用的数据集
